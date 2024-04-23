@@ -1,110 +1,64 @@
 package com.example.backend.service;
 
-import com.example.backend.model.User;
-import com.example.backend.persistence.UserEntity;
-import com.example.backend.persistence.UserRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tej.JooQDemo.jooq.sample.model.tables.pojos.Users;
+import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
-import java.util.Optional;
+
+import static com.tej.JooQDemo.jooq.sample.model.tables.Users.USERS;
 
 @Service
 public class UserService {
 
-    UserRepository userRepository;
+    private final DSLContext dsl;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserService(DSLContext dsl) {
+        this.dsl = dsl;
     }
 
-    public UserEntity getUserById(Integer id){
-        return userRepository.getUserEntityById(id);
-    }
-
-    public List<UserEntity> getAllUsers(){
-        return userRepository.findAll();
-    }
-
-    public Optional<UserEntity> insertNewUser(HttpEntity<String> user){
-        Optional<UserEntity> insertedUser = Optional.empty();
-
-        //Json input from body is turned into a user model
-        Optional<User> userFromHttpBody = jsonToUserModel(user.getBody());
-
-        //TODO Check if data is actually valid
-        if(userFromHttpBody.isPresent()){
-            UserEntity newUser = userEntityMapper(userFromHttpBody.get());
-            UserEntity returnedUser = userRepository.save(newUser);
-            insertedUser = Optional.of(returnedUser);
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public static class UserNotFoundException extends RuntimeException {
+        public UserNotFoundException(String message) {
+            super(message);
         }
-
-        return insertedUser;
     }
 
-    public Optional<UserEntity> updateUser(Integer id, HttpEntity<String> user) {
-        Optional<UserEntity> updatedUser = Optional.empty();
-        Optional<UserEntity> oldUser = Optional.ofNullable(userRepository.getUserEntityById(id));
-
-        if(oldUser.isEmpty()){
-            return updatedUser;
-        }
-
-        Optional<User> userFromHttpBody = jsonToUserModel(user.getBody());
-
-        //TODO Check if data is actually valid
-        if(userFromHttpBody.isPresent()){
-            UserEntity userToBeUpdated = updateUser(userFromHttpBody.get(), oldUser.get());
-            UserEntity returnedUser = userRepository.save(userToBeUpdated);
-            updatedUser = Optional.of(returnedUser);
-        }
-        return updatedUser;
-    }
-
-    private UserEntity updateUser(User newUserInformation, UserEntity user){
-        if(newUserInformation.getName() != null){
-            user.setName(newUserInformation.getName());
-        }
-
-        if(newUserInformation.getEmail() != null){
-            user.setEmail(newUserInformation.getEmail());
-        }
-
-        if(newUserInformation.getStatus() != null){
-            user.setStatus(newUserInformation.getStatus());
-        }
-
-        return user;
-    }
-
-    private UserEntity userEntityMapper(User user){
-        return new UserEntity(user.getName(),user.getEmail(), user.getStatus());
-    }
-
-    private Optional<User> jsonToUserModel(String jsonUser){
-        ObjectMapper mapper = new ObjectMapper();
-        Optional<User> user = Optional.empty();
-        try {
-            User mappedUser = mapper.readValue(jsonUser, User.class);
-            user = Optional.of(mappedUser);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
+    public Users getUserById(Integer id) {
+        Users user = dsl.selectFrom(USERS)
+                .where(USERS.ID.eq(id))
+                .fetchOneInto(Users.class);
+        if (user == null) {
+            throw new UserNotFoundException("Пользователь с id " + id + " не найден");
         }
         return user;
     }
 
-    public Optional<UserEntity> deleteUser(Integer id) {
+    public List<Users> getAllUsers() {
+        return dsl.selectFrom(USERS)
+                .fetchInto(Users.class);
+    }
 
-        Optional<UserEntity> userToBeDeleted = userRepository.findById(id);
+    public void insertNewUser(Users users) {
+        dsl.insertInto(USERS, USERS.ID, USERS.NAME, USERS.EMAIL, USERS.STATUS)
+                .values(users.getId(), users.getName(), users.getEmail(), users.getStatus())
+                .execute();
+    }
 
-        if(userToBeDeleted.isPresent()){
-            userRepository.deleteById(id);
-        }
+    public void updateUser(Users updatedUser, Integer id) {
+        dsl.update(USERS)
+                .set(USERS.NAME, updatedUser.getName())
+                .set(USERS.EMAIL, updatedUser.getEmail())
+                .set(USERS.STATUS, updatedUser.getStatus())
+                .where(USERS.ID.eq(id))
+                .execute();
+    }
 
-        return userToBeDeleted;
+    public void deleteUser(Integer id) {
+        dsl.deleteFrom(USERS).where(USERS.ID.eq(id)).execute();
     }
 }
