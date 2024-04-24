@@ -18,10 +18,10 @@ function Navbar() {
                             <Link className="nav-link" to="/about-us">About Us</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/contact-us">Contact Us</Link>
+                            <Link className="nav-link" to="/games">Игры</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/players">Players</Link>
+                            <Link className="nav-link" to="/players">Игроки</Link>
                         </li>
                     </ul>
                 </div>
