@@ -40,6 +40,7 @@ public class UserService {
 
     public List<Users> getAllUsers() {
         return dsl.selectFrom(USERS)
+                .orderBy(USERS.ID.asc())
                 .fetchInto(Users.class);
     }
 
