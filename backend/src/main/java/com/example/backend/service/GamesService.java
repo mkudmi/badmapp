@@ -24,4 +24,10 @@ public class GamesService {
                 .orderBy(GAMES.DATE.desc())
                 .fetchInto(Games.class);
     }
+
+    public void insertNewGame(Games games) {
+        dsl.insertInto(GAMES, GAMES.ID, GAMES.DATE, GAMES.OWNER, GAMES.FIELDS)
+                .values(games.getId(), games.getDate(), games.getOwner(), games.getFields())
+                .execute();
+    }
 }
