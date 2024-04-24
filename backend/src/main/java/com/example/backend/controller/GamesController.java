@@ -1,6 +1,7 @@
 package com.example.backend.controller;
 
 import com.bdb.badmapp.jooq.sample.model.tables.pojos.Games;
+import com.bdb.badmapp.jooq.sample.model.tables.pojos.Users;
 import com.example.backend.service.GamesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,5 +25,19 @@ public class GamesController {
     public String addGame(@RequestBody Games game) {
         gamesService.insertNewGame(game);
         return "game added";
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PutMapping("game")
+    public String updateGame(@RequestParam Integer id, @RequestBody Games game) {
+        gamesService.updateGame(game, id);
+        return "game updated";
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @DeleteMapping("game")
+    public String deleteGame(@RequestParam Integer id) {
+        gamesService.deleteGame(id);
+        return "game deleted";
     }
 }

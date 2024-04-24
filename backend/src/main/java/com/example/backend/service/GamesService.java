@@ -30,4 +30,17 @@ public class GamesService {
                 .values(games.getId(), games.getDate(), games.getOwner(), games.getFields())
                 .execute();
     }
+
+    public void updateGame(Games updatedGame, Integer id) {
+        dsl.update(GAMES)
+                .set(GAMES.DATE, updatedGame.getDate())
+                .set(GAMES.OWNER, updatedGame.getOwner())
+                .set(GAMES.FIELDS, updatedGame.getFields())
+                .where(GAMES.ID.eq(id))
+                .execute();
+    }
+
+    public void deleteGame(Integer id) {
+        dsl.deleteFrom(GAMES).where(GAMES.ID.eq(id)).execute();
+    }
 }
