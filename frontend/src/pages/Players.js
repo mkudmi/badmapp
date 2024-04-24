@@ -51,7 +51,7 @@ function Player() {
                     <div className="card">
                         <div className="card-header">
                             <h4>Players List
-                                <Link to="/" className="btn btn-primary float-end">Add Player</Link>
+                                <Link to="/players/create" className="btn btn-primary float-end">Add Player</Link>
                             </h4>
                         </div>
                         <div className="card-body">
