@@ -8,9 +8,9 @@ function App() {
     <div>
 
       <Navbar />
-      
+
       <MyRouter />
-      
+
     </div>
   );
 }

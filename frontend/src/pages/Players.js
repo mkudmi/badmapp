@@ -10,7 +10,7 @@ function Player() {
     const [players, setPlayers] = useState([]);
 
     useEffect(() => {
-        
+
         axios.get('http://localhost:8080/users').then(res => {
             console.log(res)
             setPlayers(res.data)
@@ -19,16 +19,16 @@ function Player() {
 
     }, [])
 
-    if(loading) {
+    if (loading) {
         return (
             <Loading />
         )
     }
-    
+
     var playerDetails = "";
 
     playerDetails = players.map((item, index) => {
-        return(
+        return (
             <tr key={index}>
                 <td>{item.id}</td>
                 <td>{item.name}</td>
