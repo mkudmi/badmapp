@@ -1,6 +1,6 @@
 package com.example.backend.service;
 
-import com.tej.JooQDemo.jooq.sample.model.tables.pojos.Users;
+import com.bdb.badmapp.jooq.sample.model.tables.pojos.Users;
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
 
-import static com.tej.JooQDemo.jooq.sample.model.tables.Users.USERS;
+import static com.bdb.badmapp.jooq.sample.model.Tables.USERS;
 
 @Service
 public class UserService {

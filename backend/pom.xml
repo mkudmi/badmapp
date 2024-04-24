@@ -102,7 +102,7 @@
                                 </generate>
                                 <target>
                                     <packageName>
-                                        com.tej.JooQDemo.jooq.sample.model
+                                        com.bdb.badmapp.jooq.sample.model
                                     </packageName>
                                     <directory>
                                         target/generated-sources/jooq
