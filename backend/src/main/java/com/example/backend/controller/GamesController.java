@@ -1,7 +1,6 @@
 package com.example.backend.controller;
 
 import com.bdb.badmapp.jooq.sample.model.tables.pojos.Games;
-import com.bdb.badmapp.jooq.sample.model.tables.pojos.Users;
 import com.example.backend.service.GamesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

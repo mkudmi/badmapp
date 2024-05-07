@@ -1,13 +1,10 @@
 import React from 'react';
-import MyRouter from './router/index.js'
-import Navbar from './components/Navbar.js';
+import MyRouter from './router/index.js';
 
 
 function App() {
   return (
     <div>
-
-      <Navbar />
 
       <MyRouter />
 
