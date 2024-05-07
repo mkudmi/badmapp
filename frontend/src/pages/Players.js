@@ -19,6 +19,18 @@ function Player() {
 
     }, [])
 
+    const deleteStudent = (e, id) => {
+        e.preventDefault();
+
+        const thisClicked = e.target;
+        const idInt = parseInt(id);
+        axios.delete(`http://localhost:8080/user?id=${idInt}`)
+            .then(res => {
+                console.log(res)
+                thisClicked.closest("tr").remove();
+            });
+    }
+
     if (loading) {
         return (
             <Loading />
@@ -35,10 +47,10 @@ function Player() {
                 <td>{item.email}</td>
                 <td>{item.status}</td>
                 <td>
-                    <Link to="/" className="btn btn-success">Edit</Link>
+                    <Link to={`/player/${item.id}/edit`} className="btn btn-success">Edit</Link>
                 </td>
                 <td>
-                    <button className="btn btn-danger">Delete</button>
+                    <button type="button" onClick={(e) => deleteStudent(e, item.id)} className="btn btn-danger">Delete</button>
                 </td>
             </tr>
         )
