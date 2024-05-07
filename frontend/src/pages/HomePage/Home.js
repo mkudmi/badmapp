@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import "./Home.css";
 
@@ -8,7 +8,7 @@ function Home() {
         <div className="home-container">
             <h1>Home Page</h1>
             <div className="button-container">
-                <button className="registration-button" onClick={() => console.log("Регистрация на игру")}>Регистрация на игру</button>
+                <Link to="/games/reg" className="registration-button">Регистрация на игру</Link>
                 <Link to="/owner/login" className="login-button">Вход для владельцев</Link>
             </div>
         </div>
@@ -16,4 +16,3 @@ function Home() {
 }
 
 export default Home;
-
