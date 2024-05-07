@@ -6,7 +6,9 @@ import Games from '../pages/Games.js'
 import PlayerList from "../pages/Players.js"
 import PlayerCreate from "../pages/PlayerCreate.js"
 import PlayerEdit from "../pages/PlayerEdit.js"
-import OwnerLogin from "../pages/OwnerLogin/OwnerLogin.js";
+import OwnerLogin from "../pages/OwnerLogin/OwnerLogin.js"
+import GamesReg from "../pages/GamesReg/GamesReg.js"
+import AdminPanel from "../pages/AdminPanel/AdminPanel.js";
 
 function MyRouter() {
 
@@ -20,6 +22,8 @@ function MyRouter() {
             <Route path='/player/:id/edit' element={<PlayerEdit />} />
 
             <Route path='/owner/login' element={<OwnerLogin />} />
+            <Route path='/admin' element={<AdminPanel />} />
+            <Route path='/games/reg' element={<GamesReg />} />
         </Routes>
     )
 }
