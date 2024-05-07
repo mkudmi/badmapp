@@ -1,0 +1,45 @@
+.admin-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Выравнивание по центру по вертикали */
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.create-game-button,
+.game-info-button,
+.update-game-button {
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #007bff; /* Синий цвет для кнопок */
+    color: #fff; /* Белый цвет текста */
+    text-decoration: none;
+}
+
+.delete-game-button {
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #ff0000; /* Синий цвет для кнопок */
+    color: #fff; /* Белый цвет текста */
+    text-decoration: none;
+}
+
+.create-game-button:hover,
+.game-info-button:hover,
+.update-game-button:hover {
+    background-color: #0056b3; /* Темнее синий при наведении */
+}
