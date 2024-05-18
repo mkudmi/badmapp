@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.springframework.http.ResponseEntity.*;
+
 @RestController
 public class OwnerController {
 
@@ -23,9 +25,9 @@ public class OwnerController {
         String password = loginRequest.getPass();
 
         if (ownerService.checkOwner(username, password)) {
-            return ResponseEntity.ok("Success"); // Если логин и пароль верны
+            return ok("Success"); // Если логин и пароль верны
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: Invalid credentials");
+            return status(HttpStatus.BAD_REQUEST).body("Error: Invalid credentials");
         }
     }
 
