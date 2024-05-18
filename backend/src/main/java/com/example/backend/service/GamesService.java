@@ -5,6 +5,7 @@ import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.bdb.badmapp.jooq.sample.model.Tables.GAMES;
@@ -19,18 +20,55 @@ public class GamesService {
         this.dsl = dsl;
     }
 
-    public List<Games> getAllGames() {
+    /**
+     * Получить все игры, с возможностью фильтрации по актуальным играм.
+     *
+     * @param isActual true, если нужны только актуальные игры; false, если нужны все игры.
+     * @return Список игр.
+     */
+    public List<Games> getAllGames(boolean isActual) {
+        if (isActual) {
+            return dsl.selectFrom(GAMES)
+                    .where(GAMES.DATE.greaterThan(LocalDateTime.now()))
+                    .orderBy(GAMES.DATE.desc())
+                    .fetchInto(Games.class);
+        } else {
+            return dsl.selectFrom(GAMES)
+                    .orderBy(GAMES.DATE.desc())
+                    .fetchInto(Games.class);
+        }
+    }
+
+    /**
+     * Получить игры по владельцу.
+     *
+     * @param owner Имя владельца.
+     * @return Список игр, принадлежащих указанному владельцу.
+     */
+    public List<Games> getGamesByOwner(String owner) {
         return dsl.selectFrom(GAMES)
+                .where(GAMES.OWNER.likeIgnoreCase('%' + owner + '%'))
                 .orderBy(GAMES.DATE.desc())
                 .fetchInto(Games.class);
     }
 
+    /**
+     * Вставить новую игру.
+     *
+     * @param games Объект игры.
+     */
     public void insertNewGame(Games games) {
         dsl.insertInto(GAMES, GAMES.ID, GAMES.DATE, GAMES.OWNER, GAMES.FIELDS)
                 .values(games.getId(), games.getDate(), games.getOwner(), games.getFields())
                 .execute();
     }
 
+    /**
+     * Обновить существующую игру по ID.
+     *
+     * @param updatedGame Обновлённый объект игры.
+     * @param id ID игры, которую необходимо обновить.
+     */
     public void updateGame(Games updatedGame, Integer id) {
         dsl.update(GAMES)
                 .set(GAMES.DATE, updatedGame.getDate())
@@ -40,7 +78,13 @@ public class GamesService {
                 .execute();
     }
 
+    /**
+     * Удалить игру по ID.
+     *
+     * @param id ID игры, которую необходимо удалить.
+     */
     public void deleteGame(Integer id) {
         dsl.deleteFrom(GAMES).where(GAMES.ID.eq(id)).execute();
     }
 }
+

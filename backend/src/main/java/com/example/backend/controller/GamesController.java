@@ -8,35 +8,74 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/games")
+@CrossOrigin(origins = "http://localhost:3000")
 public class GamesController {
 
-    @Autowired
-    GamesService gamesService;
+    private final GamesService gamesService;
 
-    @CrossOrigin(origins = "http://localhost:3000")
-    @GetMapping("/games")
-    public List<Games> getAllUsers() {
-        return gamesService.getAllGames();
+    @Autowired
+    public GamesController(GamesService gamesService) {
+        this.gamesService = gamesService;
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
-    @PostMapping("game")
+    /**
+     * Получить все игры с возможностью фильтрации по актуальности.
+     *
+     * @param isActual true, если нужны только актуальные игры; false, если нужны все игры.
+     * @return Список игр.
+     */
+    @GetMapping
+    public List<Games> getAllGames(@RequestParam(name = "is_actual", required = false, defaultValue = "false") boolean isActual) {
+        return gamesService.getAllGames(isActual);
+    }
+
+    /**
+     * Получить игры по владельцу.
+     *
+     * @param owner Имя владельца.
+     * @return Список игр, принадлежащих указанному владельцу.
+     */
+    @GetMapping("/by-owner")
+    public List<Games> getGamesByOwner(@RequestParam String owner) {
+        return gamesService.getGamesByOwner(owner);
+    }
+
+    /**
+     * Добавить новую игру.
+     *
+     * @param game Объект игры.
+     * @return Сообщение о результате операции.
+     */
+    @PostMapping
     public String addGame(@RequestBody Games game) {
         gamesService.insertNewGame(game);
-        return "game added";
+        return "Game added";
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
-    @PutMapping("game")
-    public String updateGame(@RequestParam Integer id, @RequestBody Games game) {
+    /**
+     * Обновить существующую игру по ID.
+     *
+     * @param id ID игры.
+     * @param game Обновлённый объект игры.
+     * @return Сообщение о результате операции.
+     */
+    @PutMapping("/{id}")
+    public String updateGame(@PathVariable Integer id, @RequestBody Games game) {
         gamesService.updateGame(game, id);
-        return "game updated";
+        return "Game updated";
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
-    @DeleteMapping("game")
-    public String deleteGame(@RequestParam Integer id) {
+    /**
+     * Удалить игру по ID.
+     *
+     * @param id ID игры.
+     * @return Сообщение о результате операции.
+     */
+    @DeleteMapping("/{id}")
+    public String deleteGame(@PathVariable Integer id) {
         gamesService.deleteGame(id);
-        return "game deleted";
+        return "Game deleted";
     }
 }
+
