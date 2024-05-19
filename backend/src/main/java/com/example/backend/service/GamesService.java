@@ -58,8 +58,9 @@ public class GamesService {
      * @param games Объект игры.
      */
     public void insertNewGame(Games games) {
-        dsl.insertInto(GAMES, GAMES.ID, GAMES.DATE, GAMES.OWNER, GAMES.FIELDS)
-                .values(games.getId(), games.getDate(), games.getOwner(), games.getFields())
+        long places = games.getFields() * 4;
+        dsl.insertInto(GAMES, GAMES.ID, GAMES.DATE, GAMES.OWNER, GAMES.FIELDS, GAMES.PLACES)
+                .values(games.getId(), games.getDate(), games.getOwner(), games.getFields(), places)
                 .execute();
     }
 
