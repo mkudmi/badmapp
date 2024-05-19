@@ -36,7 +36,7 @@ public class GamesController {
      * @param owner Имя владельца.
      * @return Список игр, принадлежащих указанному владельцу.
      */
-    @GetMapping("/by-owner")
+    @GetMapping("/by_owner")
     public List<Games> getGamesByOwner(@RequestParam String owner) {
         return gamesService.getGamesByOwner(owner);
     }
