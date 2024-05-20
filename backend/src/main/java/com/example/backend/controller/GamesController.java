@@ -5,6 +5,8 @@ import com.example.backend.service.GamesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -13,6 +15,7 @@ import java.util.List;
 public class GamesController {
 
     private final GamesService gamesService;
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
 
     @Autowired
     public GamesController(GamesService gamesService) {
@@ -77,5 +80,18 @@ public class GamesController {
         gamesService.deleteGame(id);
         return "Game deleted";
     }
+
+    /**
+     * Получить количество свободных мест на указанную дату.
+     *
+     * @param date Дата в формате "yyyy-MM-dd'T'HH:mm:ss".
+     * @return Количество свободных мест.
+     */
+    @GetMapping("/available_places")
+    public int getAvailablePlaces(@RequestParam String date) {
+        LocalDateTime dateTime = LocalDateTime.parse(date, DATE_TIME_FORMATTER);
+        return gamesService.getAvailablePlaces(dateTime);
+    }
 }
+
 

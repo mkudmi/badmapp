@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.bdb.badmapp.jooq.sample.model.Tables.GAMES;
+import static com.bdb.badmapp.jooq.sample.model.tables.UsersGames.USERS_GAMES;
 
 @Service
 public class GamesService {
@@ -27,16 +29,34 @@ public class GamesService {
      * @return Список игр.
      */
     public List<Games> getAllGames(boolean isActual) {
+        LocalDateTime now = LocalDateTime.now();
+
+        // Основной запрос для получения всех игр
+        var query = dsl.selectFrom(GAMES);
         if (isActual) {
-            return dsl.selectFrom(GAMES)
-                    .where(GAMES.DATE.greaterThan(LocalDateTime.now()))
-                    .orderBy(GAMES.DATE.desc())
-                    .fetchInto(Games.class);
-        } else {
-            return dsl.selectFrom(GAMES)
-                    .orderBy(GAMES.DATE.desc())
-                    .fetchInto(Games.class);
+            query.where(GAMES.DATE.greaterThan(now));
         }
+
+        // Получаем все игры (учитывая фильтрацию по актуальности)
+        List<Games> allGames = query.orderBy(GAMES.DATE.desc()).fetchInto(Games.class);
+
+        // Создаем список для игр с доступными местами
+        List<Games> availableGames = new ArrayList<>();
+
+        for (Games game : allGames) {
+            // Получаем количество зарегистрированных пользователей для текущей игры
+            Integer registeredUsers = dsl.selectCount()
+                    .from(USERS_GAMES)
+                    .where(USERS_GAMES.DATE.eq(game.getDate()))
+                    .fetchOne(0, int.class);
+
+            // Если количество зарегистрированных пользователей меньше чем количество мест, добавляем игру в список
+            if (registeredUsers < game.getPlaces()) {
+                availableGames.add(game);
+            }
+        }
+
+        return availableGames;
     }
 
     /**
@@ -86,6 +106,33 @@ public class GamesService {
      */
     public void deleteGame(Integer id) {
         dsl.deleteFrom(GAMES).where(GAMES.ID.eq(id)).execute();
+    }
+
+    /**
+     * Получить количество свободных мест на указанную дату.
+     *
+     * @param date Дата, на которую нужно узнать количество свободных мест.
+     * @return Количество свободных мест.
+     */
+    public int getAvailablePlaces(LocalDateTime date) {
+        // Получить количество мест для указанной даты
+        Integer totalPlaces = dsl.select(GAMES.PLACES)
+                .from(GAMES)
+                .where(GAMES.DATE.eq(date))
+                .fetchOneInto(Integer.class);
+
+        if (totalPlaces == null) {
+            throw new IllegalArgumentException("No game found for the specified date.");
+        }
+
+        // Получить количество зарегистрированных пользователей для указанной даты
+        Integer registeredUsers = dsl.selectCount()
+                .from(USERS_GAMES)
+                .where(USERS_GAMES.DATE.eq(date))
+                .fetchOne(0, int.class);
+
+        // Вычислить количество свободных мест
+        return totalPlaces - registeredUsers;
     }
 }
 
