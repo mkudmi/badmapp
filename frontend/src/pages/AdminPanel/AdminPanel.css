@@ -13,9 +13,7 @@
 }
 
 .create-game-button,
-.game-info-button,
-.update-game-button,
-.delete-game-button {
+.game-info-button {
     padding: 10px 20px;
     margin: 10px;
     font-size: 16px;
@@ -25,13 +23,10 @@
     background-color: #007bff; /* Синий цвет для кнопок */
     color: #fff; /* Белый цвет текста */
     text-decoration: none;
-    width: 200px; /* Фиксированная ширина кнопок */
+    width: 210px; /* Фиксированная ширина кнопок */
 }
 
 .create-game-button:hover,
-.game-info-button:hover,
-.update-game-button:hover,
-.delete-game-button:hover {
+.game-info-button:hover {
     background-color: #0056b3; /* Темнее синий при наведении */
 }
-
