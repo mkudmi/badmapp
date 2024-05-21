@@ -72,6 +72,7 @@ public class OwnerService {
     public void insertNewOwner(Owners owner) {
         String hashedPassword = passwordEncoder.encode(owner.getPass());
         dsl.insertInto(OWNERS)
+                .set(OWNERS.NAME, owner.getName())
                 .set(OWNERS.LOGIN, owner.getLogin())
                 .set(OWNERS.PASS, hashedPassword)
                 .execute();

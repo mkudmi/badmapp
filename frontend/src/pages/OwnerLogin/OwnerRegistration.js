@@ -1,36 +1,37 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "./OwnerLogin.css";
+import "./OwnerRegistration.css";
 
-function OwnerLogin() {
+function OwnerRegistration() {
+    const [name, setName] = useState("");
     const [login, setLogin] = useState("");
     const [pass, setPass] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
-    const handleLogin = async (e) => {
+    const handleRegistration = async (e) => {
         e.preventDefault();
 
         // Input validation
-        if (!login || !pass) {
+        if (!name || !login || !pass) {
             setError("Все поля обязательны для заполнения.");
             return;
         }
 
         try {
-            const response = await fetch("http://localhost:8080/login", {
+            const response = await fetch("http://localhost:8080/owner", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ login, pass })
+                body: JSON.stringify({ name, login, pass })
             });
 
             if (response.ok) {
-                navigate("/admin");
+                navigate("/login"); // Перенаправляем пользователя на страницу логина после успешной регистрации
             } else {
                 const errorData = await response.json();
-                setError(errorData.message || "Неверные логин или пароль.");
+                setError(errorData.message || "Ошибка при регистрации.");
             }
         } catch (error) {
             setError("Произошла ошибка при обработке вашего запроса.");
@@ -38,9 +39,17 @@ function OwnerLogin() {
     };
 
     return (
-        <div className="owner-login-container">
-            <form className="login-form" onSubmit={handleLogin}>
-                <h2>Форма входа</h2>
+        <div className="owner-registration-container">
+            <form className="registration-form" onSubmit={handleRegistration}>
+                <h2>Форма регистрации</h2>
+                <label htmlFor="name">Имя:</label>
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                />
                 <label htmlFor="username">Имя пользователя:</label>
                 <input
                     type="text"
@@ -57,15 +66,14 @@ function OwnerLogin() {
                     value={pass}
                     onChange={(e) => setPass(e.target.value)}
                 />
-                <button type="submit">Войти</button>
+                <button type="submit">Зарегистрироваться</button>
                 {error && <div className="error-message">{error}</div>}
             </form>
             <div className="button-container">
-                <Link to="/" className="back-link">Назад</Link>
-                <Link to="/register" className="register-link">Регистрация</Link>
+                <Link to="/login" className="back-link">Назад</Link>
             </div>
         </div>
     );
 }
 
-export default OwnerLogin;
+export default OwnerRegistration;
