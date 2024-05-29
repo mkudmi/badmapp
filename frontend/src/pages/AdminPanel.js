@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./AdminPanel.css"
+import "./styles.css";
 
 function AdminPanel() {
     return (
-        <div className="admin-container">
+        <div className="container admin-container">
             <h1>Admin Panel</h1>
             <div className="button-container-admin">
                 <Link to="/games/create" className="create-game-button">Создать игру</Link>

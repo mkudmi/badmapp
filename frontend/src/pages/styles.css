@@ -1,0 +1,234 @@
+/* Общие стили */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    height: 100vh;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 330px;
+    margin: 15px;
+}
+
+.form-container h2 {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.form-container label {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.form-container input,
+.form-container select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.form-container button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
+}
+
+.form-container button:hover {
+    background-color: #0056b3;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.button-container-vertical a,
+.button-container-vertical button,
+.register-link {
+    width: 100%;
+    text-align: center;
+    padding: 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff;
+    margin-bottom: 10px; /* Добавляем отступ между кнопками */
+    display: flex;
+}
+
+.button-container-vertical a:hover,
+.button-container-vertical button:hover {
+    background-color: #0056b3;
+}
+
+.error-message {
+    color: red;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.time-picker {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.time-picker select {
+    width: auto;
+    margin-right: 5px;
+}
+
+/* Дополнительные стили для AdminPanel */
+.admin-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.button-container-admin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.create-game-button,
+.game-info-button,
+.back-link {
+    margin: 10px 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff;
+}
+
+.create-game-button:hover,
+.game-info-button:hover,
+.back-link:hover {
+    background-color: #0056b3;
+}
+
+/* Стили для таблиц */
+.table-container {
+    max-height: 390px;
+    overflow-y: auto;
+    width: 100%;
+}
+
+.table-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-container th,
+.table-container td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.table-container th {
+    background-color: #f2f2f2;
+    text-align: left;
+}
+
+.table-container td {
+    text-align: left;
+}
+
+.mt-5 {
+    margin-top: 3rem;
+}
+
+/* Стили для Home */
+.home-container h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.registration-button {
+    background-color: #007bff;
+}
+
+.registration-button:hover {
+    background-color: #0056b3;
+}
+
+.unreg-button {
+    background-color: #ff0000;
+}
+
+.unreg-button:hover {
+    background-color: #cc0000;
+}
+
+.login-button {
+    background-color: #007bff;
+}
+
+.login-button:hover {
+    background-color: #0056b3;
+}
+
+/* Адаптивные стили */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    .form-container,
+    .button-container,
+    .button-container-vertical {
+        width: 100%;
+    }
+
+    .button-container a,
+    .button-container button,
+    .button-container-vertical a,
+    .button-container-vertical button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
