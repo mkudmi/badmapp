@@ -12,9 +12,10 @@ CREATE TABLE users(
 CREATE TABLE owners(
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
-    login VARCHAR(255) NOT NULL,
+    surname VARCHAR(255) NOT NULL,
+    login VARCHAR(255) NOT NULL UNIQUE,
     pass VARCHAR(255) NOT NULL,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
 );
 
 CREATE TABLE games(
@@ -23,6 +24,7 @@ CREATE TABLE games(
     owner VARCHAR(255) NOT NULL,
     fields INT NOT NULL,
     places BIGINT NOT NULL,
+    price BIGINT NOT NULL,
     PRIMARY KEY (id)
 );
 

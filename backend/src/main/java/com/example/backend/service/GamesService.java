@@ -79,8 +79,8 @@ public class GamesService {
      */
     public void insertNewGame(Games games) {
         long places = games.getFields() * 4;
-        dsl.insertInto(GAMES, GAMES.ID, GAMES.DATE, GAMES.OWNER, GAMES.FIELDS, GAMES.PLACES)
-                .values(games.getId(), games.getDate(), games.getOwner(), games.getFields(), places)
+        dsl.insertInto(GAMES, GAMES.ID, GAMES.DATE, GAMES.OWNER, GAMES.FIELDS, GAMES.PLACES, GAMES.PRICE)
+                .values(games.getId(), games.getDate(), games.getOwner(), games.getFields(), places, games.getPrice())
                 .execute();
     }
 
@@ -95,6 +95,7 @@ public class GamesService {
                 .set(GAMES.DATE, updatedGame.getDate())
                 .set(GAMES.OWNER, updatedGame.getOwner())
                 .set(GAMES.FIELDS, updatedGame.getFields())
+                .set(GAMES.PRICE, updatedGame.getPrice())
                 .where(GAMES.ID.eq(id))
                 .execute();
     }
