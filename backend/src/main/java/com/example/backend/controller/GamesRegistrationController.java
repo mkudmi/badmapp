@@ -9,6 +9,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -51,6 +52,19 @@ public class GamesRegistrationController {
         LocalDateTime dateTime = LocalDateTime.parse(date, DATE_TIME_FORMATTER);
         gamesRegService.deleteUserFromGame(firstName, lastName, dateTime);
         return "User removed from game";
+    }
+
+    /**
+     * Запросить пользователей из игры.
+     *
+     * @param date      Дата игры в формате yyyy-MM-dd'T'HH:mm:ss.
+     * @return Сообщение о результате операции.
+     */
+    @GetMapping("/users_from_game")
+    public List<UsersGames> getAllUsersFromGame(
+            @RequestParam LocalDateTime date
+    ) {
+        return gamesRegService.getUsersFromGame(date);
     }
 
     /**

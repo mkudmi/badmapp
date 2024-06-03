@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static com.bdb.badmapp.jooq.sample.model.Tables.GAMES;
 import static com.bdb.badmapp.jooq.sample.model.Tables.USERS_GAMES;
@@ -71,6 +72,12 @@ public class GamesRegService {
             // Если записи не существует, выбрасываем исключение с HTTP статусом 404
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь не найден для указанной даты.");
         }
+    }
+
+    public List<UsersGames> getUsersFromGame(LocalDateTime date) {
+        return dsl.selectFrom(USERS_GAMES)
+                .where(USERS_GAMES.DATE.eq(date))
+                .fetchInto(UsersGames.class);
     }
 }
 
