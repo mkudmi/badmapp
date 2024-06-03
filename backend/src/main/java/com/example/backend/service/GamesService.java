@@ -78,7 +78,7 @@ public class GamesService {
      * @param games Объект игры.
      */
     public void insertNewGame(Games games) {
-        long places = games.getFields() * 4;
+        long places = games.getFields() * 4 + 1;
         dsl.insertInto(GAMES, GAMES.ID, GAMES.DATE, GAMES.OWNER, GAMES.FIELDS, GAMES.PLACES, GAMES.PRICE)
                 .values(games.getId(), games.getDate(), games.getOwner(), games.getFields(), places, games.getPrice())
                 .execute();
@@ -88,7 +88,7 @@ public class GamesService {
      * Обновить существующую игру по ID.
      *
      * @param updatedGame Обновлённый объект игры.
-     * @param id ID игры, которую необходимо обновить.
+     * @param id          ID игры, которую необходимо обновить.
      */
     public void updateGame(Games updatedGame, Integer id) {
         dsl.update(GAMES)

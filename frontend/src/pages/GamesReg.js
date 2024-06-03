@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {Link, useNavigate} from "react-router-dom";
 import "./styles.css";
 
 function GamesReg() {
@@ -41,7 +41,7 @@ function GamesReg() {
 
         const selectedGameData = gameDates.find(game => game.date === selectedDate);
         if (selectedGameData) {
-            setPrice(selectedGameData.price); // Устанавливаем цену игры
+            setPrice(`${selectedGameData.price} €`); // Устанавливаем цену игры с символом евро
         }
 
         // Получение количества доступных мест для выбранной игры
@@ -61,7 +61,7 @@ function GamesReg() {
             setError("Выберите дату");
             return; // Прерываем выполнение функции
         }
-        
+
         // Подготовка данных для отправки
         const data = {
             firstName: firstName,
@@ -77,21 +77,21 @@ function GamesReg() {
             },
             body: JSON.stringify(data)
         })
-        .then(response => {
-            if (response.ok) {
-                setError("");
-                alert("Вы успешно зарегистрировались на игру!");
-                navigate("/");
-            } else {
-                return response.json().then(errorData => {
-                    setError(errorData.message || "Ошибка при регистрации на игру.");
-                });
-            }
-        })
-        .catch(error => {
-            console.error('Ошибка при отправке данных:', error);
-            setError("Произошла ошибка при обработке вашего запроса.");
-        });
+            .then(response => {
+                if (response.ok) {
+                    setError("");
+                    alert("Вы успешно зарегистрировались на игру!");
+                    navigate("/");
+                } else {
+                    return response.json().then(errorData => {
+                        setError(errorData.message || "Ошибка при регистрации на игру.");
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Ошибка при отправке данных:', error);
+                setError("Произошла ошибка при обработке вашего запроса.");
+            });
     };
 
     const formatDateTime = (dateTime) => {
@@ -114,9 +114,9 @@ function GamesReg() {
             <form className="form-container registration-form" onSubmit={handleSubmit}>
                 <h2>Регистрация на игру</h2>
                 <label htmlFor="firstName">Имя:</label>
-                <input type="text" id="firstName" value={firstName} onChange={handleFirstNameChange} />
+                <input type="text" id="firstName" value={firstName} onChange={handleFirstNameChange}/>
                 <label htmlFor="lastName">Фамилия:</label>
-                <input type="text" id="lastName" value={lastName} onChange={handleLastNameChange} />
+                <input type="text" id="lastName" value={lastName} onChange={handleLastNameChange}/>
                 <label htmlFor="game">Выберите игру:</label>
                 <select id="game" value={selectedGame} onChange={handleGameChange}>
                     <option value="">Выберите игру</option>
@@ -139,10 +139,11 @@ function GamesReg() {
                 <button type="submit">Зарегистрироваться</button>
                 {error && <div className="error-message">{error}</div>}
                 <Link to="/" className="back-link">Назад</Link>
-            </form> 
+            </form>
         </div>
     );
 }
 
 export default GamesReg;
+
 

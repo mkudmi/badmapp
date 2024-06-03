@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {Link, useNavigate} from "react-router-dom";
 import "./styles.css";
 
 function GameCreate() {
@@ -56,7 +56,7 @@ function GameCreate() {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ date: dateTime.toISOString(), owner, fields, price })
+                body: JSON.stringify({date: dateTime.toISOString(), owner, fields, price})
             });
 
             if (response.ok) {
@@ -149,7 +149,7 @@ function GameCreate() {
                 {error && <div className="error-message">{error}</div>}
             </form>
             <div className="button-container">
-                
+
             </div>
         </div>
     );

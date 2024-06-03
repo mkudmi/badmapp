@@ -27,7 +27,7 @@ public class OwnerService {
      * Проверка наличия владельца по логину и паролю.
      *
      * @param login Логин владельца.
-     * @param pass Пароль владельца.
+     * @param pass  Пароль владельца.
      * @return true, если владелец найден; false в противном случае.
      */
     public boolean checkOwner(String login, String pass) {
@@ -83,7 +83,7 @@ public class OwnerService {
      * Обновление существующего владельца.
      *
      * @param updatedOwner Обновлённый объект владельца.
-     * @param id ID владельца, которого необходимо обновить.
+     * @param id           ID владельца, которого необходимо обновить.
      */
     public void updateOwner(Owners updatedOwner, Integer id) {
         String hashedPassword = passwordEncoder.encode(updatedOwner.getPass());

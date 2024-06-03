@@ -59,7 +59,7 @@ public class GamesController {
     /**
      * Обновить существующую игру по ID.
      *
-     * @param id ID игры.
+     * @param id   ID игры.
      * @param game Обновлённый объект игры.
      * @return Сообщение о результате операции.
      */

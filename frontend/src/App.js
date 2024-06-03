@@ -3,13 +3,13 @@ import MyRouter from './router/index.js';
 
 
 function App() {
-  return (
-    <div>
+    return (
+        <div>
 
-      <MyRouter />
+            <MyRouter/>
 
-    </div>
-  );
+        </div>
+    );
 }
 
 export default App;

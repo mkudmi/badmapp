@@ -1,7 +1,7 @@
 package com.example.backend.controller;
 
 import com.bdb.badmapp.jooq.sample.model.tables.pojos.Users;
-import com.example.backend.service.UserService;
+import com.example.backend.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +11,7 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    UserService userService;
+    PlayerService userService;
 
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/user")
