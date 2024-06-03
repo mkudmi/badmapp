@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, {useState} from "react";
+import {Link, useNavigate} from "react-router-dom";
 import "./styles.css";
 
 function OwnerRegistration() {
@@ -25,7 +25,7 @@ function OwnerRegistration() {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ name, surname, login, pass })
+                body: JSON.stringify({name, surname, login, pass})
             });
 
             if (response.ok) {
@@ -77,13 +77,10 @@ function OwnerRegistration() {
                 />
                 <button type="submit">Зарегистрироваться</button>
                 {error && <div className="error-message">{error}</div>}
-            </form>
-            <div className="button-container">
                 <Link to="/login" className="back-link">Назад</Link>
-            </div>
+            </form>
         </div>
     );
 }
 
 export default OwnerRegistration;
-

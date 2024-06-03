@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, {useState} from "react";
+import {Link, useNavigate} from "react-router-dom";
 import "./styles.css";
 
 function OwnerLogin() {
@@ -23,7 +23,7 @@ function OwnerLogin() {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ login, pass })
+                body: JSON.stringify({login, pass})
             });
 
             if (response.ok) {
