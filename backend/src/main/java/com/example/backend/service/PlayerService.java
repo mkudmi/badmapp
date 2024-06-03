@@ -12,12 +12,12 @@ import java.util.List;
 import static com.bdb.badmapp.jooq.sample.model.Tables.USERS;
 
 @Service
-public class UserService {
+public class PlayerService {
 
     private final DSLContext dsl;
 
     @Autowired
-    public UserService(DSLContext dsl) {
+    public PlayerService(DSLContext dsl) {
         this.dsl = dsl;
     }
 
